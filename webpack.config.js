@@ -4,25 +4,23 @@ const path = require('path');
 module.exports = {
   entry: './src/app.js',
   mode: "development",
-  output: {
-    path: __dirname + '/build',
-    filename: "bundle.js"
-  },
   module: {
     rules: [{
       test: /\.(js|jsx)$/,
       exclude: /node_modules/,
-      loader: 'babel-loader',
-      options: {
-        plugins: ['transform-runtime'],
-        presets: ['es2015', 'react', 'stage-2','env']
-      }
+      loader: 'babel-loader'
     }, {
       test: /\.css$/,
       use: ['style-loader', 'css-loader']
     }]
   },
-  resolve: { extensions: ['\*', '.js', '.jsx'] },
+  resolve: { 
+    extensions: ['.js', '.jsx','json'],
+    modules:[
+      path.resolve(__dirname,'src'),
+      'node_modules'
+    ]
+  },
   output: {
     path: path.resolve(__dirname, "dist"),
     publicPath: "dist",
@@ -32,7 +30,8 @@ module.exports = {
     contentBase: path.join(__dirname, "public"),
     port: 3000,
     publicPath: "http://localhost:3000/dist/",
-    hotOnly: true
+    hotOnly: true,
+    open:true
   },
   plugins:[new webpack.HotModuleReplacementPlugin()]
 };
